@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path')
-const noteData = require('./db/db.json');
+
 const fs = require('fs');
 const uuid = require('./helpers/uuid.js');
 
@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/notes.html'))
+    res.sendFile(path.join(__dirname, '/public/notes.html'));
 });
 
 app.get('/api/notes', (req, res) => {
