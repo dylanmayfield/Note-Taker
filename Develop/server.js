@@ -30,12 +30,11 @@ app.post('/api/notes', (req, res) => {
     console.info(`${req.method} request recieved to save note.`);
     const { title, text } = req.body
     if (title && text) {
-        const newNote = {
+        const notes = {
             title,
             text,
-            note_id: uuid()
+            note_id: uuid(),
         };
-
 
         fs.readFile('./db/db.json', 'utf8', (err, data) => {
             if (err) {
@@ -43,13 +42,13 @@ app.post('/api/notes', (req, res) => {
             } else {
 
                 const parsedNotes = JSON.parse(data);
-                
-                parsedNotes.push(newNote);
+
+                parsedNotes.push(notes);
 
 
                 fs.writeFile(
                     './db/db.json',
-                    JSON.stringify(parsedNotes, null, 4),
+                    JSON.stringify(parsedNotes),
                     (writeErr) =>
                         writeErr
                             ? console.error(writeErr)
@@ -60,7 +59,7 @@ app.post('/api/notes', (req, res) => {
 
         const response = {
             status: 'success',
-            body: newNote,
+            body: notes,
         };
 
         console.log(response);
