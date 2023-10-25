@@ -14,11 +14,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/index.html'));
+    res.sendFile(path.join(__dirname, '/public/index.html'));
 });
 
 app.get('/notes', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/notes.html'))
+    res.sendFile(path.join(__dirname, '/public/notes.html'))
 });
 
 app.get('/api/notes', (req, res) => {
@@ -30,7 +30,7 @@ app.post('/api/notes', (req, res) => {
     console.info(`${req.method} request recieved to save note.`);
     const { title, text } = req.body
     if (title && text) {
-        const notes = {
+        const newNote = {
             title,
             text,
             note_id: uuid(),
@@ -43,7 +43,7 @@ app.post('/api/notes', (req, res) => {
 
                 const parsedNotes = JSON.parse(data);
 
-                parsedNotes.push(notes);
+                parsedNotes.push(newNote);
 
 
                 fs.writeFile(
@@ -59,7 +59,7 @@ app.post('/api/notes', (req, res) => {
 
         const response = {
             status: 'success',
-            body: notes,
+            body: newNote,
         };
 
         console.log(response);
